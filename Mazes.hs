@@ -51,3 +51,22 @@ randomPick xs gen =
   let
     (rand, gen') = randomR (0, length xs-1) gen
   in (xs!!rand,gen')
+
+backtracking :: Grid -> StdGen -> Grid
+backtracking grid gen =
+  backtracking' grid (x,y) gen2 (S.singleton (x,y)) [(x,y)]
+  where
+    (max_x, max_y) = getBounds grid
+    (x, gen1) = randomR (0, max_x-1) gen
+    (y, gen2) = randomR (0, max_y-1) gen1
+
+backtracking' :: Grid -> Coord -> StdGen -> S.Set Coord -> [Coord] -> Grid
+backtracking' grid _  _   _      []     = grid
+backtracking' grid c gen seen traversed =
+    if null neighbors_not_seen
+    then backtracking' grid previous_cell gen seen $ tail traversed
+    else backtracking' (connect grid c next_cell) next_cell gen' (S.insert next_cell seen) (c:traversed)
+  where
+    neighbors_not_seen = [cell | cell <- (neighbors grid c), cell `S.notMember` seen]
+    (next_cell,gen') = randomPick neighbors_not_seen gen
+    previous_cell = head traversed
