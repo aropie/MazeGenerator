@@ -27,7 +27,7 @@ neighbors g (x,y) = filter p $ foldr (\(a,b) acc -> (a+x,b+y):acc) [] [(0,1),(0,
 
 drawCell :: Grid -> Coord -> String
 drawCell g (x,y) = (if down `S.member` connected then "  " else "__") ++
-                   (if right `S.member` connected then "" else "|")
+                   (if right `S.member` connected then "_" else "|")
   where
     connected = g M.! (x,y)
     down = (x,y-1)
@@ -39,7 +39,7 @@ drawRow g r = foldr (++) "" [drawCell g (x,r) | x <- [0..max_x]]
     max_x = fst $ getBounds g
 
 drawMaze :: Grid -> String
-drawMaze g = foldl (++) top_wall ["|" ++ (drawRow g r) ++ "\n" | r <- [0..max_y]]
+drawMaze g = foldl (++) top_wall ["|" ++ (drawRow g r) ++ "\n" | r <- [max_y, max_y-1..0]]
   where
     max_y = snd $ getBounds g
     max_x = (fst $ getBounds g) + 1
