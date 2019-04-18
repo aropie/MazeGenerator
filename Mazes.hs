@@ -5,8 +5,8 @@ import qualified Data.Map as M
 import qualified Data.Set as S
 
 type Coord = (Int, Int)
-type Node = S.Set Coord
-type Grid = M.Map Coord Node
+type Cell = S.Set Coord
+type Grid = M.Map Coord Cell
 
 generateNewMaze :: Int -> Int -> Grid
 generateNewMaze n m = M.fromList [((x,y),S.empty) | x <- [0..n-1], y <- [0..m-1]]
