@@ -3,6 +3,7 @@ module Mazes where
 
 import qualified Data.Map as M
 import qualified Data.Set as S
+import System.Random (StdGen, randomR, mkStdGen)
 
 type Coord = (Int, Int)
 type Cell = S.Set Coord
@@ -44,3 +45,9 @@ drawMaze g = foldl (++) top_wall ["|" ++ (drawRow g r) ++ "\n" | r <- [max_y, ma
     max_y = snd $ getBounds g
     max_x = (fst $ getBounds g) + 1
     top_wall = "_" ++ (foldr (++) "" $ replicate max_x "___") ++ "\n"
+
+randomPick :: [a] -> StdGen -> (a, StdGen)
+randomPick xs gen =
+  let
+    (rand, gen') = randomR (0, length xs-1) gen
+  in (xs!!rand,gen')
