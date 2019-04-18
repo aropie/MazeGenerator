@@ -43,5 +43,4 @@ drawMaze g = foldl (++) top_wall ["|" ++ (drawRow g r) ++ "\n" | r <- [max_y, ma
   where
     max_y = snd $ getBounds g
     max_x = (fst $ getBounds g) + 1
-    -- top_wall = " " ++ replicate (max_x * 3) '_' ++ "\n"
-    top_wall = " " ++ (foldr (++) "" $ replicate max_x "__ ") ++ "\n"
+    top_wall = "_" ++ (foldr (++) "" $ replicate max_x "___") ++ "\n"
