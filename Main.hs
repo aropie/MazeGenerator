@@ -6,11 +6,13 @@ import Utils
 
 import qualified Backtracking
 import qualified HuntAndKill
+import qualified Prim
 
 getGenerator :: Int -> (Int -> Int -> StdGen -> Grid)
 getGenerator n = case n of
   1 -> Backtracking.generate
   2 -> HuntAndKill.generate
+  3 -> Prim.generate
   _ -> error "Nope"
 
 main :: IO()
