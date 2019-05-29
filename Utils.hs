@@ -61,3 +61,9 @@ randomPick xs gen =
   let
     (rand, gen') = randomR (0, length xs-1) gen
   in (xs!!rand,gen')
+
+randomChoice :: S.Set a -> StdGen -> (a, StdGen)
+randomChoice s gen = (S.elemAt index s, gen1)
+  where
+    max_size = (S.size s) - 1
+    (index, gen1) = randomR (0, max_size) gen
